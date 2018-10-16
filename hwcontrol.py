@@ -3,6 +3,7 @@
 import requests
 import re
 import ipaddress
+import sys
 
 class HwSwitch:
     """Configuration of power switch must be done via browser.
@@ -75,7 +76,16 @@ class HwSwitch:
         return self.parse_status(r.text)
 
 
-pc = HwSwitch('192.168.0.211')
-s = pc.off(2)
-print(s)
-print(pc.o_status(2))
+def main(ip):
+    power_control = HwSwitch(ip)
+    power_control.on(1)
+    power_control.on(2)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        ip = sys.argv[1]
+        main(ip)
+    else:
+        print('One argument [IP] is needed.')
+        
